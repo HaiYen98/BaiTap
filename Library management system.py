@@ -4,81 +4,81 @@ from tkinter import ttk, messagebox, simpledialog
 class LibraryApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Library Management System")
-        self.books = ["English", "Chemistry", "Math", "Physics", "Computer", "Software"]
+        self.root.title("Hệ thống Quản lý Thư viện")
+        self.books = ["Tiếng Anh", "Hóa học", "Toán học", "Vật lý", "Tin học", "Phần mềm"]
         self.create_widgets()
 
     def create_widgets(self):
-        # Create Menu Bar
+        # Tạo thanh Menu
         self.menu = tk.Menu(self.root)
         self.root.config(menu=self.menu)
         self.file_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="File", menu=self.file_menu)
-        self.file_menu.add_command(label="Save", command=self.save_books)  # This will not work without pickle
-        self.file_menu.add_command(label="Load", command=self.load_books)  # This will not work without pickle
+        self.menu.add_cascade(label="Tệp", menu=self.file_menu)
+        self.file_menu.add_command(label="Lưu", command=self.save_books)
+        self.file_menu.add_command(label="Tải", command=self.load_books)
         self.file_menu.add_separator()
-        self.file_menu.add_command(label="Exit", command=self.root.quit)
+        self.file_menu.add_command(label="Thoát", command=self.root.quit)
 
-        # Create Main Frame
+        # Tạo khung chính
         self.main_frame = ttk.Frame(self.root, padding="10")
         self.main_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # Add Book Button
-        self.add_book_button = ttk.Button(self.main_frame, text="Add Book", command=self.add_book)
+        # Nút Thêm sách
+        self.add_book_button = ttk.Button(self.main_frame, text="Thêm sách", command=self.add_book)
         self.add_book_button.grid(row=0, column=0, padx=10, pady=5)
 
-        # View Books Button
-        self.view_books_button = ttk.Button(self.main_frame, text="View Books", command=self.view_books)
+        # Nút Xem sách
+        self.view_books_button = ttk.Button(self.main_frame, text="Xem sách", command=self.view_books)
         self.view_books_button.grid(row=0, column=1, padx=10, pady=5)
 
-        # Search Book Button
-        self.search_book_button = ttk.Button(self.main_frame, text="Search Book", command=self.search_book)
+        # Nút Tìm kiếm sách
+        self.search_book_button = ttk.Button(self.main_frame, text="Tìm kiếm sách", command=self.search_book)
         self.search_book_button.grid(row=0, column=2, padx=10, pady=5)
 
-        # Status Bar
+        # Thanh trạng thái
         self.status = tk.StringVar()
-        self.status.set("Ready")
+        self.status.set("Sẵn sàng")
         self.status_bar = ttk.Label(self.root, textvariable=self.status, relief="sunken", anchor='w', padding="5")
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
     def add_book(self):
-        book_name = simpledialog.askstring("Add Book", "Enter the book name:")
+        book_name = simpledialog.askstring("Thêm sách", "Nhập tên sách:")
         if book_name:
             if book_name not in self.books:
                 self.books.append(book_name)
-                self.status.set(f"'{book_name}' has been added.")
+                self.status.set(f"'{book_name}' đã được thêm.")
             else:
-                self.status.set(f"'{book_name}' already exists.")
+                self.status.set(f"'{book_name}' đã tồn tại.")
             self.update_status()
         else:
-            self.status.set("No book name entered!")
+            self.status.set("Chưa nhập tên sách!")
             self.update_status()
 
     def view_books(self):
         if self.books:
             books_list = "\n".join(self.books)
             number_of_books = len(self.books)
-            messagebox.showinfo("Books in Library", f"Books:\n{books_list}\n\nTotal number of books: {number_of_books}")
+            messagebox.showinfo("Sách trong thư viện", f"Các sách:\n{books_list}\n\nTổng số sách: {number_of_books}")
         else:
-            messagebox.showinfo("Books in Library", "No books available.")
+            messagebox.showinfo("Sách trong thư viện", "Không có sách nào.")
 
     def search_book(self):
-        search_term = simpledialog.askstring("Search Book", "Enter book name to search:")
+        search_term = simpledialog.askstring("Tìm kiếm sách", "Nhập tên sách để tìm kiếm:")
         if search_term:
             if search_term in self.books:
-                messagebox.showinfo("Search Result", f"'{search_term}' is in the library.")
+                messagebox.showinfo("Kết quả tìm kiếm", f"'{search_term}' có trong thư viện.")
             else:
-                messagebox.showinfo("Search Result", f"'{search_term}' is not in the library.")
+                messagebox.showinfo("Kết quả tìm kiếm", f"'{search_term}' không có trong thư viện.")
         else:
-            messagebox.showwarning("Input Error", "No search term entered!")
+            messagebox.showwarning("Lỗi nhập liệu", "Chưa nhập từ khóa tìm kiếm!")
 
     def save_books(self):
-        # Functionality removed as pickle is not used
-        messagebox.showinfo("Save Functionality", "Save functionality is not available in this version.")
+        # Chức năng Lưu (chưa khả dụng)
+        messagebox.showinfo("Chức năng Lưu", "Chức năng lưu chưa khả dụng trong phiên bản này.")
 
     def load_books(self):
-        # Functionality removed as pickle is not used
-        messagebox.showinfo("Load Functionality", "Load functionality is not available in this version.")
+        # Chức năng Tải (chưa khả dụng)
+        messagebox.showinfo("Chức năng Tải", "Chức năng tải chưa khả dụng trong phiên bản này.")
 
     def update_status(self):
         self.status_bar.config(text=self.status.get())
